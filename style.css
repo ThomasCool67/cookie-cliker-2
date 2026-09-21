@@ -1,0 +1,280 @@
+:root {
+  --tile: #1d5c58;
+  --tile-line: rgba(255, 255, 255, 0.07);
+  --panel: #f2f7f5;
+  --ink: #17332f;
+  --muted: #5a7772;
+  --line: #d5e2de;
+  --berry: #e8536f;
+  --dough: #d9a15b;
+  --choc: #4a2a1a;
+  --font: "Avenir Next Rounded", ui-rounded, "Nunito", "Trebuchet MS", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background-color: var(--tile);
+  background-image:
+    linear-gradient(var(--tile-line) 2px, transparent 2px),
+    linear-gradient(90deg, var(--tile-line) 2px, transparent 2px);
+  background-size: 56px 56px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ---------- Bancada ---------- */
+.bakery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 16px 24px;
+  color: #fff;
+  text-align: center;
+}
+
+.count {
+  font-size: clamp(2.6rem, 11vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+  font-variant-numeric: tabular-nums;
+}
+
+.unit { font-size: 1.1rem; font-weight: 700; margin-top: 4px; opacity: 0.9; }
+
+.rate {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #bfe6dc;
+  min-height: 1.4em;
+}
+
+.rate.frenzy { color: #ffe27a; }
+
+.stage {
+  position: relative;
+  margin: 20px 0 12px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.tray {
+  width: min(84vw, 360px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 35% 28%, #f1f5f5, #a9b9b8);
+  box-shadow:
+    inset 0 0 0 7px #cfdada,
+    inset 0 0 0 9px rgba(0, 0, 0, 0.08),
+    0 20px 30px rgba(0, 0, 0, 0.28);
+}
+
+.cookie {
+  width: 76%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  filter: drop-shadow(0 8px 5px rgba(0, 0, 0, 0.3));
+  transition: transform 0.09s ease-out;
+}
+
+.cookie svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+.cookie:hover { transform: scale(1.025); }
+.cookie:active { transform: scale(0.93); }
+.cookie:focus-visible { outline: 4px solid #ffe27a; outline-offset: 6px; border-radius: 50%; }
+
+.floater {
+  position: absolute;
+  pointer-events: none;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 0 2px 0 var(--choc), 0 0 8px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+  animation: rise 0.9s ease-out forwards;
+  z-index: 3;
+}
+
+@keyframes rise {
+  to { transform: translate(-50%, -150px); opacity: 0; }
+}
+
+.stats {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #bfe6dc;
+  margin: 0;
+}
+
+/* ---------- Cozinha (loja) ---------- */
+.shop {
+  background: var(--panel);
+  border-radius: 22px 22px 0 0;
+  padding: 20px 16px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.shop h2 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.shop .hint { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted); }
+
+.shop ul { list-style: none; margin: 0; padding: 0; }
+.shop li + li { border-top: 1px solid var(--line); }
+
+.item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: opacity 0.15s;
+}
+
+.item.poor { opacity: 0.5; }
+.item:not(.poor):hover { background: rgba(232, 83, 111, 0.07); }
+.item:not(.poor):active { background: rgba(232, 83, 111, 0.14); }
+.item:focus-visible { outline: 3px solid var(--berry); outline-offset: 2px; border-radius: 8px; }
+
+.info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.name { font-weight: 800; font-size: 1.05rem; }
+.desc { font-size: 0.85rem; color: var(--muted); }
+
+.cost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--berry);
+  font-variant-numeric: tabular-nums;
+}
+
+.cost i {
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--dough);
+  box-shadow: inset 0 0 0 2px #b8783a;
+  display: inline-block;
+}
+
+.owned {
+  flex: none;
+  min-width: 2.4ch;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--tile);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.reset {
+  margin-top: 18px;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Cookie dourado ---------- */
+.golden {
+  position: fixed;
+  width: 76px;
+  height: 76px;
+  border: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 10;
+  background:
+    radial-gradient(circle at 62% 62%, #7a5210 0 5px, transparent 6px),
+    radial-gradient(circle at 36% 40%, #7a5210 0 4px, transparent 5px),
+    radial-gradient(circle at 60% 30%, #7a5210 0 3px, transparent 4px),
+    radial-gradient(circle at 35% 30%, #fff3b0, #f2c230 55%, #c98d10);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.55), 0 0 34px 6px rgba(255, 215, 94, 0.9);
+  animation: wobble 1.1s ease-in-out infinite alternate;
+}
+
+.golden:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+
+@keyframes wobble {
+  from { transform: translate(-50%, -50%) rotate(-8deg) scale(0.96); }
+  to   { transform: translate(-50%, -50%) rotate(8deg) scale(1.06); }
+}
+
+/* ---------- Aviso ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 16px;
+  transform: translate(-50%, -140%);
+  max-width: calc(100vw - 32px);
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: var(--choc);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease-out;
+  z-index: 20;
+  text-align: center;
+}
+
+.toast.show { transform: translate(-50%, 0); }
+
+/* ---------- Telas grandes ---------- */
+@media (min-width: 860px) {
+  .app { grid-template-columns: 1fr 400px; height: 100vh; }
+  .bakery { justify-content: center; padding-bottom: 48px; }
+  .shop {
+    border-radius: 0;
+    overflow-y: auto;
+    padding: 28px 24px;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie { transition: none; }
+  .golden { animation: none; }
+  .toast { transition: none; }
+  @keyframes rise { to { opacity: 0; } }
+}
